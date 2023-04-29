@@ -51,7 +51,7 @@ const App = () => {
         </div>
         {showCookie && (
           <div className="cookie-animation">
-            <img src="/public/cookie-favicon.png" alt="img_cookie" />
+            <img src="/cookie-favicon.png" alt="img_cookie" />
           </div>
         )}
         {!showCookie && fortune.phrase && (
