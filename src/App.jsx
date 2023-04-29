@@ -12,15 +12,20 @@ const App = () => {
     author: "",
     phrase: "",
   });
+  const [showCookie, setShowCookie] = useState(false);
 
   const imgBg = [Fondo1, Fondo2, Fondo3, Fondo4];
   const getRandomNumber = (limit) => Math.floor(Math.random() * limit);
 
   const randomFortune = () => {
-    setFortune(dataDB[getRandomNumber(dataDB.length)]);
-    document.body.style.backgroundImage = `url(${
-      imgBg[getRandomNumber(imgBg.length)]
-    })`;
+    setShowCookie(true);
+    setTimeout(() => {
+      setFortune(dataDB[getRandomNumber(dataDB.length)]);
+      document.body.style.backgroundImage = `url(${
+        imgBg[getRandomNumber(imgBg.length)]
+      })`;
+      setShowCookie(false);
+    }, 2000);
   };
 
   return (
@@ -28,7 +33,12 @@ const App = () => {
       <div className="container">
         <p className="container-title">GALLETAS DE LA FORTUNA</p>
         <div className="container-btn">
-          <button type="button" onClick={randomFortune}>
+          <button
+            type="button"
+            className={showCookie ? "btn-no-drop" : ""}
+            disabled={showCookie}
+            onClick={randomFortune}
+          >
             <box-icon
               type="solid"
               animation="tada"
@@ -39,9 +49,16 @@ const App = () => {
             PROBAR MI SUERTE
           </button>
         </div>
-        {fortune.phrase && <CardDescription phrase={fortune.phrase} />}
+        {showCookie && (
+          <div className="cookie-animation">
+            <img src="/public/cookie-favicon.png" alt="img_cookie" />
+          </div>
+        )}
+        {!showCookie && fortune.phrase && (
+          <CardDescription phrase={fortune.phrase} />
+        )}
       </div>
-      {fortune.author && <Author author={fortune.author} />}
+      {!showCookie && fortune.author && <Author author={fortune.author} />}
     </>
   );
 };
